@@ -8,6 +8,7 @@ public class HeroController : MonoBehaviour
    Animator anim;
    Rigidbody2D rb;
    SpriteRenderer sr;
+   public float jumpForce = 0.5f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,7 +37,16 @@ public class HeroController : MonoBehaviour
         {
             sr.flipX = rb.velocity.x < 0;
         }
-
+        if(Input.GetButtonDown("Jump"))
+        {   
+            // anim.SetBool("Jump", true);
+            // Invoke("StopJump", 1.5f);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
         
     }
+    // void StopJumpAnim()q
+    // {
+    //     anim.SetBool("Jump", false);
+    // }
 }
