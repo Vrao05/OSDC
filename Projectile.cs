@@ -10,8 +10,12 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        if(!EnemyController.isBatDead)
-        {
+        
+        InvokeRepeating("StartFire", 3, 1);
+        
+    }
+    public void StartFire()
+    {
         if (Time.time - lastFireTime >= fireRate)
         {
            
@@ -20,7 +24,6 @@ public class Projectile : MonoBehaviour
 
            
             lastFireTime = Time.time;
-        }
         }
     }
 }

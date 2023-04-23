@@ -20,7 +20,7 @@ public class BedroomTransition : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
         
-        SceneManager.LoadScene("Game1");
+        SceneManager.LoadScene("Game2");
         }
     }
 }

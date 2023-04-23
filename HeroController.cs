@@ -14,13 +14,23 @@ public class HeroController : MonoBehaviour
    float lastJumpTime = -Mathf.Infinity;
    int health;
    public bool Died;
+
+   public List<GameObject> images = new List<GameObject>();
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim  = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
-        health = 3;
+        health = 5;
         Died = false;
+
+        foreach (Transform child in transform)
+        {
+            if(child.gameObject.GetComponent<SpriteRenderer>()!=null)
+            {
+                images.Add(child.gameObject);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -51,10 +61,7 @@ public class HeroController : MonoBehaviour
             Jump();
             
         }
-        else
-        {
-            anim.SetBool("Jump", false);
-        }
+        
         
         }
 
@@ -67,13 +74,18 @@ public class HeroController : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         lastJumpTime = Time.time;
-        anim.SetBool("Jump", true);
     }
    public void HurtPlayer()
     {   
         if(health>0)
         {
         health--;
+        }
+        if(images.Count>0)
+        {
+            GameObject imageToRemove = images[0];
+            images.RemoveAt(0);
+            Destroy(imageToRemove);
         }
         anim.SetBool("IsHurt", true);
     }
@@ -91,6 +103,6 @@ public class HeroController : MonoBehaviour
     }
     void LoadScene()
     {
-        SceneManager.LoadScene("Game1");
+        SceneManager.LoadScene("OldValley");
     }
 }

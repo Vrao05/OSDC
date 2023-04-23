@@ -5,11 +5,12 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     Animator anim;
-    public static bool isBatDead;
+    // public static bool isBatDead;
+    public GameObject proj;
     void Start()
     {
         anim = GetComponent<Animator>();
-        isBatDead = false;
+        
     }
 
     // Update is called once per frame
@@ -22,7 +23,7 @@ public class EnemyController : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             anim.SetBool("IsDead", true);
-            isBatDead = true;
+            proj.SetActive(false);
         }
     }
     
