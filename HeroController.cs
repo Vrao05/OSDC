@@ -15,7 +15,7 @@ public class HeroController : MonoBehaviour
    int health;
    public bool Died;
 
-   public List<GameObject> images = new List<GameObject>();
+   public List<GameObject> images = new List<GameObject>();  //life hearts
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,7 +61,6 @@ public class HeroController : MonoBehaviour
             Jump();
             
         }
-        
         
         }
 
