@@ -11,9 +11,12 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         
-        counter = Time.time;
+        counter = Time.timeSinceLevelLoad;
         StartFire();
         
+    }
+    void FixedUpdate()
+    {
     }
     public void StartFire()
     {   
