@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HeroController : MonoBehaviour
 {
@@ -9,22 +10,30 @@ public class HeroController : MonoBehaviour
    Rigidbody2D rb;
    SpriteRenderer sr;
    public float jumpForce = 0.5f;
+   public float JumpCooldown = 1.5f;
+   float lastJumpTime = -Mathf.Infinity;
+   int health;
+   public bool Died;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim  = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        health = 3;
+        Died = false;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if(!Died)
+        {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
         rb.velocity = new Vector2(horizontalInput*moveSpeed,rb.velocity.y);
 
 
-        if(rb.velocity.magnitude>0)
+        if(Mathf.Abs(rb.velocity.x)>0)
         {
             anim.SetBool("IsWalking", true);
             
@@ -37,16 +46,51 @@ public class HeroController : MonoBehaviour
         {
             sr.flipX = rb.velocity.x < 0;
         }
-        if(Input.GetButtonDown("Jump"))
+        if(Time.time - lastJumpTime >= JumpCooldown && Input.GetButtonDown("Jump"))
         {   
-            // anim.SetBool("Jump", true);
-            // Invoke("StopJump", 1.5f);
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            Jump();
+            
+        }
+        else
+        {
+            anim.SetBool("Jump", false);
         }
         
+        }
+
+        else
+        {
+            Invoke("LoadScene", 3f);
+        }
     }
-    // void StopJumpAnim()q
-    // {
-    //     anim.SetBool("Jump", false);
-    // }
+    void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        lastJumpTime = Time.time;
+        anim.SetBool("Jump", true);
+    }
+   public void HurtPlayer()
+    {   
+        if(health>0)
+        {
+        health--;
+        }
+        anim.SetBool("IsHurt", true);
+    }
+   public  void HurtOver()
+    {
+        anim.SetBool("IsHurt", false);
+    }
+    public void KillPlayer()
+    {
+        if(health==0)
+        {
+            anim.SetBool("IsDead", true);
+            Died = true;
+        }
+    }
+    void LoadScene()
+    {
+        SceneManager.LoadScene("Game1");
+    }
 }

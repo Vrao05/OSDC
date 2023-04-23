@@ -8,6 +8,7 @@ public class SceneTransition : MonoBehaviour
 {
     public PlayableDirector t2;
     public GameObject txt;
+    int counter = 0;
     void Start()
     {
         
@@ -22,7 +23,12 @@ public class SceneTransition : MonoBehaviour
         }
     }
     void OnTriggerEnter2D(Collider2D other)
-    {
+    {   
+        if(counter==0){
         SceneManager.LoadScene("OldValley");
+        counter++;
+        }
+        else 
+        return;
     }
 }
