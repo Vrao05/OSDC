@@ -5,17 +5,20 @@ public class Projectile : MonoBehaviour
     public GameObject projectilePrefab;
     public float speed = 10f;
     public float fireRate = 0.5f;
-
+    public float counter = 0;
     private float lastFireTime = 0f;
 
     private void Update()
     {
         
-        InvokeRepeating("StartFire", 3, 1);
+        counter = Time.time;
+        StartFire();
         
     }
     public void StartFire()
-    {
+    {   
+        if(counter>3)
+        {
         if (Time.time - lastFireTime >= fireRate)
         {
            
@@ -24,6 +27,7 @@ public class Projectile : MonoBehaviour
 
            
             lastFireTime = Time.time;
+        }
         }
     }
 }
